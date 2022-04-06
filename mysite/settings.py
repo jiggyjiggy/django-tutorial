@@ -9,18 +9,35 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
+import json, os
 
 from pathlib import Path
+import secrets
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@%cnxcs!8!fg_5b99-w9!-motst1mqppyim+6z#flk2j*5ud-4'
+
+# 그대로 쓴다면 django secrect key가 노출된다
+# 다른곳에 저장해야한다
+# mysql 비밀번호도 마찬가지다
+# .gitignore에 저장
+secret_file = os.path.join(BASE_DIR, 'PW_settings.json')
+with open(secret_file) as f:
+    secrets = json.loads(f.read())
+
+def get_secret(setting):
+    return secrets[setting]
+
+SECRET_KEY = get_secret("SECRET_KEY_SETTING")
+
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -74,16 +91,8 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'TUTORIAL',
-        'USER': 'root',
-        'PASSWORD': '0000',
-        'HOST': 'localhost',
-       # 'PORT': '5432',
-    }
-}
+DATABASES = get_secret("DB_SETTING")
+
 
 
 # Password validation

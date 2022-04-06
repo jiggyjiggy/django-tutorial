@@ -1,0 +1,18 @@
+{
+    "SECRET_KEY_SETTING" : "django-insecure-@%cnxcs!8!fg_5b99-w9!-motst1mqppyim+6z#flk2j*5ud-4",
+
+    "DB_SETTING" : {
+        "default": {
+            "ENGINE": "django.db.backends.mysql",
+            "NAME": "TUTORIAL",
+            "USER": "root",
+            "PASSWORD": "0000", 
+            "HOST": "localhost"
+        }
+    }
+}
+
+
+
+
+
